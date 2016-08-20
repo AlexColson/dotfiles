@@ -12,3 +12,4 @@ then
   mv $HOME/.vim $HOME/.vim.`date +'%Y%m%d-%H%M%S'`
 fi
 ln -s `pwd` $HOME/.vim
+popd
