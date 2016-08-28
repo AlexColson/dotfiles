@@ -27,31 +27,31 @@ call vundle#rc()
 
 
 " ==========================================================
-" Plugins included 
+" Plugins included
 " ==========================================================
 "{
 "Bundle 'vim-scripts/The-NERD-tree'
 "Bundle 'tomtom/tlib_vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'ervandew/supertab'
+"Bundle 'MarcWeber/vim-addon-mw-utils'
 "Bundle 'sjl/gundo.vim'
-"Bundle 'vim-scripts/pep8'
-Bundle 'vim-scripts/a.vim'
-"Bundle 'Lokaltog/vim-powerline'
-"Bundle 'Raimondi/delimitMate'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-git'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-commentary'
-Bundle 'godlygeek/tabular'  
-Bundle 'kien/ctrlp.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/a.vim'            " Switches between header and definition files (.h,.cpp)
+Plugin 'ervandew/supertab'            " Perform all your vim insert mode completions with Tab
+Plugin 'terryma/vim-multiple-cursors' " Allows to have multiple cursors a la  Sublime
+Plugin 'flazz/vim-colorschemes' " themes for vim
+Plugin 'tpope/vim-unimpaired' " mappings which are simply short normal mode aliases for commonly used ex commands
+Plugin 'tpope/vim-fugitive' " git wrapper goodness
+Plugin 'tpope/vim-git' " necessary for vim-fugitive for vim older than 7.2
+Plugin 'tpope/vim-surround'  " mappings to easily delete, change and add such surroundings in pairs, such as quotes, parens, etc.
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-repeat' "  enables repeating other supported plugins with the . command
+Plugin 'tpope/vim-commentary' " comment stuff out
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
+Plugin 'godlygeek/tabular' " align chunk of text in tabular fation
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-airline/vim-airline' " fancy statusline
+Plugin 'vim-airline/vim-airline-themes' " themes for vim-airline
 "Bundle 'Shougo/vimshell'
 "Bundle 'SirVer/ultisnips'
 "Bundle 'honza/vim-snippets'
@@ -77,32 +77,19 @@ Plugin 'vim-airline/vim-airline-themes'
 " Bubble single lines
 nmap <C-Up> [e
 nmap <C-Down> ]e
+nmap <C-k> [e
+nmap <C-j> ]e
 " Bubble multiple lines
 vmap <C-Up> [egv
+vmap <C-k> [egv
+vmap <C-j> ]egv
 vmap <C-Down> ]egv
 
-" Buffer resizing 
+" Buffer resizing
 nmap <S-Up> :resize +1<CR>
 nmap <S-Down> :resize -1<CR>
 nmap <F12> :1winc< <CR>
 nmap <F11> :1winc> <CR>
-
-" tab navigation
-
-" for linux and windows users (using the control key)
-map <C-S-]> gt
-map <C-S-[> gT
-map <C-1> 1gt
-map <C-2> 2gt
-map <C-3> 3gt
-map <C-4> 4gt
-map <C-5> 5gt
-map <C-6> 6gt
-map <C-7> 7gt
-map <C-8> 8gt
-map <C-9> 9gt
-map <C-0> :tablast<CR>
-
 
 syntax on                     " syntax highlighing
 filetype on                   " try to detect filetypes
@@ -112,10 +99,11 @@ set numberwidth=1             " using only 1 column (and 1 space) while possible
 set background=dark           " We are using dark background in vim
 set title                     " show title in console title bar
 set wildmenu                  " Menu completion in command mode on <Tab>
-set wildmode=full             " <Tab> cycles between all matching choices.
+set wildmode=list:longest     " Tab complete the longest common match if there multiple choices.
 
 
 """ Moving Around/Editing {
+set hidden                  " hides buffer instead of closing them (and forcing you to undo/write)
 set cursorline              " have a line indicate the cursor location
 set ruler                   " show the cursor position all the time
 set nostartofline           " Avoid moving cursor to BOL when jumping around
@@ -127,7 +115,7 @@ set nowrap                  " don't wrap text
 set linebreak               " don't wrap textin the middle of a word
 set autoindent              " always set autoindenting on
 set smartindent             " use smart indent if there is no indent file
-set tabstop=2               " <tab> inserts 4 spaces 
+set tabstop=2               " <tab> inserts 4 spaces
 set shiftwidth=2            " but an indent level is 2 spaces wide.
 set softtabstop=2           " <BS> over an autoindent deletes both spaces.
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
@@ -157,15 +145,17 @@ set noswapfile
 "}
 
 """" Messages, Info, Status {
-set ls=2                    " allways show status line
-set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
-set confirm                 " Y-N-C prompt if closing with unsaved changes.
-set showcmd                 " Show incomplete normal mode commands as I type.
-set report=0                " : commands always print changed line count.
-set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
-set ruler                   " Show some info, even without statuslines.
-set laststatus=2            " Always show statusline, even if only 1 window.
-"set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()} 
+set ls=2            " allways show status line
+set vb t_vb=        " Disable all bells.  I hate ringing/flashing.
+set confirm         " Y-N-C prompt if closing with unsaved changes.
+set showcmd         " Show incomplete normal mode commands as I type.
+set report=0        " : commands always print changed line count.
+set shortmess+=a    " Use [+]/[RO]/[w] for modified/readonly/written.
+set ruler           " Show some info, even without statuslines.
+set laststatus=2    " Always show statusline, even if only 1 window.
+set history=1000    " remember more commands and search history
+set undolevels=1000 " use many muchos levels of undo
+
 if has('statusline')
     set laststatus=2
     " Broken down into easily includeable segments
@@ -190,7 +180,7 @@ set incsearch
 
 
 " Ignore these files when completing
-set wildignore+=*.o,*.obj,.git,*.pyc    
+set wildignore+=*.o,*.obj,.git,*.pyc
 
 
 """" Change update time (for augroup)
@@ -262,16 +252,6 @@ let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
 
-" UltiSnip {
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-" }
-
 " Gundo {
 map <leader>u :GundoToggle<CR>
 "}
@@ -298,7 +278,7 @@ let g:clang_auto_select = 1
 let g:clang_use_library = 1
 
 let g:clang_complete_macros=1
-let g:clang_library_path="/localdisk/a_colson/sandbox/buildtools/0.1/lib/"
+let g:clang_library_path=$CLANG_LIB_DIR
 let g:clang_snippets=1
 "let g:clang_snippets_engine='ultisnips'
 let g:clang_conceal_snippets=1
@@ -335,13 +315,6 @@ map <leader>, <Esc>:AV<CR>
 imap <Leader>n <ESC>:IHS<CR>:A<CR>
 nmap <Leader>n :IHS<CR>:A<CR>
 
-"power line 
-"set fillchars+=stl:\ ,stlnc:\
-"set encoding=utf-8
-"let g:Powerline_symbols = 'fancy'
-"set laststatus=2 
-
-
 "multiple cursors {
 let g:multi_cursor_use_default_mapping=1
 let g:multi_cursor_next_key='<C-d>'
@@ -368,7 +341,7 @@ let g:multi_cursor_next_key='<C-d>'
 "    " NEW
 "    " CtrlP search
 "    " replacing unite with ctrl-p
-"    nnoremap <silent> <leader>r :Unite -start-insert -buffer-name=files -winheight=10 file_rec/async<cr>    
+"    nnoremap <silent> <leader>r :Unite -start-insert -buffer-name=files -winheight=10 file_rec/async<cr>
 "    " ============
 "    autocmd FileType unite call s:unite_settings()
 "
@@ -420,11 +393,6 @@ nnoremap <silent> <leader>ge :Gedit<CR>
 " Mnemonic _i_nteractive
 nnoremap <silent> <leader>gi :Git add -p %<CR>
 nnoremap <silent> <leader>gg :SignifyToggle<CR>
-"}
-
-" Vimshell {
-"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-"let g:vimshell_prompt =  '$ '
 "}
 
 " CTags {
@@ -479,11 +447,38 @@ function! <SID>StripTrailingWhitespaces()
     %s/\v\s+$//e
     call cursor(l, c)
 endfun
+nmap <silent> <leader>rw :call <SID>StripTrailingWhitespaces()<CR>
 
-" Using file extension
-" autocmd BufWritePre *.h,*.c,*.java,*.C,*.py,*.cpp :call <SID>StripTrailingWhitespaces()
+"autocmd BufWritePre *.h,*.c,*.java,*.C,*.py,*.cpp :call <SID>StripTrailingWhitespaces()
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 
-au FileType python setl sw=4 ts=4 sts=4 
+" Using file extension
+au FileType python setl sw=2 ts=2 sts=2
+
+" Markdown {
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+"}
+
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
+
+" Airline {
+" airline options
+let g:airline_powerline_fonts=1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_theme='powerlineish'
+let g:airline#extensions#tabline#enabled = 1 " enable airline tabline
+let g:airline#extensions#tabline#tab_min_count = 2 " only show tabline if tabs are being used (more than 1 tab open)
+let g:airline#extensions#tabline#show_buffers = 0 " do not show open buffers in tabline
+let g:airline#extensions#tabline#show_splits = 0
+
+"}
