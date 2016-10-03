@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 INSTALL_DIR=`dirname $0`
-pushd
+pushd `pwd`
 
 cd $INSTALL_DIR
-mkdir -p $INSTALL_DIR/bundle
-git clone https://github.com/VundleVim/Vundle.vim.git $INSTALL_DIR/bundle/vundle
+mkdir -p bundle
+git clone https://github.com/VundleVim/Vundle.vim.git bundle/vundle
 
 if [ -e  $HOME/.vim ]
 then
