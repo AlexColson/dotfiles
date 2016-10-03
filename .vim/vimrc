@@ -308,7 +308,8 @@ nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 " }
 
-
+" highlight current word without moving
+map <leader>h :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>
 
 " buffer switching shortcut
 map <leader>, <Esc>:AV<CR>
