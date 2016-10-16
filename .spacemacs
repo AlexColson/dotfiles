@@ -256,45 +256,53 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-    (defun copy-to-clipboard ()
-      "Copies selection to x-clipboard."
-      (interactive)
-      (if (display-graphic-p)
+  (defun copy-to-clipboard ()
+    "Copies selection to x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+        (progn
+          (message "Yanked region to x-clipboard!")
+          (call-interactively 'clipboard-kill-ring-save)
+          )
+      (if (region-active-p)
           (progn
-            (message "Yanked region to x-clipboard!")
-            (call-interactively 'clipboard-kill-ring-save)
-            )
-        (if (region-active-p)
-            (progn
-              (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
-              (message "Yanked region to clipboard!")
-              (deactivate-mark))
-          (message "No region active; can't yank to clipboard!")))
-      )
+            (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+            (message "Yanked region to clipboard!")
+            (deactivate-mark))
+        (message "No region active; can't yank to clipboard!")))
+    )
 
-    (defun paste-from-clipboard ()
-      "Pastes from x-clipboard."
-      (interactive)
-      (if (display-graphic-p)
-          (progn
-            (clipboard-yank)
-            (message "graphics active")
-            )
-        (insert (shell-command-to-string "xsel -o -b"))
-        )
+  (defun paste-from-clipboard ()
+    "Pastes from x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+        (progn
+          (clipboard-yank)
+          (message "graphics active")
+          )
+      (insert (shell-command-to-string "xsel -o -b"))
       )
+    )
   (evil-leader/set-key "o y" 'copy-to-clipboard)
   (evil-leader/set-key "o p" 'paste-from-clipboard)
 
+  ;; Define orgmode project for publishing with twbs
+  (setq org-publish-project-alist
+        '(("org-notes"
+            :base-directory "~/org/"
+            :publishing-directory "~/public_html/"
+            :publishing-function org-twbs-publish-to-html
+            :with-sub-superscript nil
+            )))
   (defun my-org-publish-buffer ()
     (interactive)
     (save-buffer)
     (save-excursion (org-publish-current-file))
     (let* ((proj (org-publish-get-project-from-filename buffer-file-name))
-           (proj-plist (cdr proj))
-           (rel (file-relative-name buffer-file-name
+            (proj-plist (cdr proj))
+            (rel (file-relative-name buffer-file-name
                                     (plist-get proj-plist :base-directory)))
-           (dest (plist-get proj-plist :publishing-directory)))
+            (dest (plist-get proj-plist :publishing-directory)))
       (browse-url (concat "file://"
                           (file-name-as-directory (expand-file-name dest))
                           (file-name-sans-extension rel)
