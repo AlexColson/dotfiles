@@ -29,6 +29,8 @@ values."
      git
      markdown
      org
+     ocaml
+     c-c++
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -41,7 +43,10 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     ox-twbs
+    )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -280,6 +285,22 @@ you should place your code here."
       )
   (evil-leader/set-key "o y" 'copy-to-clipboard)
   (evil-leader/set-key "o p" 'paste-from-clipboard)
+
+  (defun my-org-publish-buffer ()
+    (interactive)
+    (save-buffer)
+    (save-excursion (org-publish-current-file))
+    (let* ((proj (org-publish-get-project-from-filename buffer-file-name))
+           (proj-plist (cdr proj))
+           (rel (file-relative-name buffer-file-name
+                                    (plist-get proj-plist :base-directory)))
+           (dest (plist-get proj-plist :publishing-directory)))
+      (browse-url (concat "file://"
+                          (file-name-as-directory (expand-file-name dest))
+                          (file-name-sans-extension rel)
+                          ".html"))))
+
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
