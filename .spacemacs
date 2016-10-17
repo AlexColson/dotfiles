@@ -31,10 +31,11 @@ values."
      org
      ocaml
      c-c++
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
+     python
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     spell-checking
      ;; syntax-checking
      (version-control :variables
                        version-control-diff-tool 'diff-hl)
