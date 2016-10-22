@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -308,7 +309,13 @@ you should place your code here."
                           (file-name-as-directory (expand-file-name dest))
                           (file-name-sans-extension rel)
                           ".html"))))
+  (defun artist-mode-toggle-emacs-state ()
+    (if artist-mode
+        (evil-emacs-state)
+      (evil-exit-emacs-state)))
 
+  (unless (eq dotspacemacs-editing-style 'emacs)
+    (add-hook 'artist-mode-hook #'artist-mode-toggle-emacs-state))
 
   )
 
