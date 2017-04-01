@@ -31,12 +31,17 @@ values."
      markdown
      org
      ;; ocaml
+
+     ;; c++ 
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t
             )
-     semantic
+     semantic ;; for semantic refactoring
+
+     ;; python packages
      python
+
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -54,6 +59,7 @@ values."
      ox-twbs
      cmake-ide
      ag
+     company-jedi
     )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
