@@ -10,4 +10,7 @@ ln -s `pwd`/.spacemacs.d ~/.spacemacs.d
 
 $INSTALL_DIR/.vim/install.sh
 
+# remap caps to ctrl
+xmodmap .Xmodmap 
+
 popd
