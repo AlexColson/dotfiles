@@ -35,12 +35,13 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t
             )
+     semantic
      python
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      spell-checking
-     ;; syntax-checking
+     syntax-checking
      (version-control :variables
                        version-control-diff-tool 'diff-hl)
      )
@@ -52,6 +53,7 @@ values."
    '(
      ox-twbs
      cmake-ide
+     ag
     )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
