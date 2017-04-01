@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -29,12 +30,15 @@ values."
      git
      markdown
      org
-     ocaml
-     c-c++
+     ;; ocaml
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t
+            )
      python
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+     ;; (shell :variables
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom)
      spell-checking
      ;; syntax-checking
      (version-control :variables
@@ -47,6 +51,7 @@ values."
    dotspacemacs-additional-packages
    '(
      ox-twbs
+     cmake-ide
     )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -238,6 +243,9 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+
+   ;; (evil-set-initial-state 'artist-mode 'emacs)
    ))
 
 (defun dotspacemacs/user-init ()
@@ -309,6 +317,11 @@ you should place your code here."
                           (file-name-sans-extension rel)
                           ".html"))))
 
+  (setq global-flycheck-mode t)
+
+  (setq-default dotspacemacs-configuration-layers
+                '((auto-completion :variables
+                                   auto-completion-enable-snippets-in-popup t)))
 
   )
 

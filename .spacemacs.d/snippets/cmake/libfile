@@ -1,0 +1,29 @@
+#key : libfile
+#name : Template of CMakeLists.txt for a library
+# --
+project ($1)
+message ("Generating project ${PROJECT_NAME}")
+
+
+SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+
+include_directories (
+	"${TSLIB_INCLUDE_PATH}/"
+)
+
+add_library (${PROJECT_NAME}
+  # files to include in the library go here
+)
+
+
+SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+
+include_directories (
+	"${TSLIB_INCLUDE_PATH}/"
+)
+
+target_link_libraries (${PROJECT_NAME})
+
+install (
+   TARGETS ${PROJECT_NAME}
+   DESTINATION bin)
