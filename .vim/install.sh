@@ -12,4 +12,10 @@ then
   mv $HOME/.vim $HOME/.vim.`date +'%Y%m%d-%H%M%S'`
 fi
 ln -s `pwd` $HOME/.vim
+
+if [ -d ~/.config ]
+then
+    mkdir -p ~/.config
+fi
+ln -s `pwd`/ $HOME/.config/nvim
 popd
